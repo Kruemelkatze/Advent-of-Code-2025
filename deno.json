@@ -1,0 +1,13 @@
+{
+    "lint": {
+        "rules": {
+            "exclude": [
+                "no-unversioned-import",
+                "no-unused-vars",
+                "no-unused-imports",
+                "no-import-prefix",
+                "no-explicit-any"
+            ]
+        }
+    }
+}
