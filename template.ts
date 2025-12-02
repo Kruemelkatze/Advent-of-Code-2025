@@ -6,8 +6,10 @@ const PROD = Deno.args.some((arg) => arg === "prod");
 const inputFile = PROD ? "input.txt" : "input-test.txt";
 console.log(`Using ${inputFile} (${PROD ? "PROD" : "TEST"})`);
 
+console.debug = (...args: any[]) => PROD ? null : console.log(...args);
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Setup ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if(!await exists(inputFile)) {
+if (!await exists(inputFile)) {
     console.error(`Where the fuck is ${inputFile}???`);
     Deno.exit(1);
 }
