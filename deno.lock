@@ -1,0 +1,15 @@
+{
+  "version": "5",
+  "specifiers": {
+    "jsr:@es-toolkit/es-toolkit@^1.42.0": "1.42.0",
+    "jsr:@std/fs@*": "1.0.20"
+  },
+  "jsr": {
+    "@es-toolkit/es-toolkit@1.42.0": {
+      "integrity": "66b3c799dda4bf99a46ba91bcf6072dbe0ebdb8fab5482fdba15d3e96128bebe"
+    },
+    "@std/fs@1.0.20": {
+      "integrity": "e953206aae48d46ee65e8783ded459f23bec7dd1f3879512911c35e5484ea187"
+    }
+  }
+}

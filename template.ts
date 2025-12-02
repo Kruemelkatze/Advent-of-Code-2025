@@ -1,4 +1,4 @@
-import * as tk from "jsr:@es-toolkit/es-toolkit@^1.42.0";
+import * as tk from "jsr:@es-toolkit/es-toolkit";
 import { exists } from "jsr:@std/fs/exists";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Config ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
