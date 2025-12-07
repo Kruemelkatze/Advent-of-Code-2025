@@ -44,10 +44,28 @@ function nextRowIndex(index: number) {
     return nextRow;
 }
 
-const beams = new Set<number>();         // All beams (inactive and active)
-const activeBeams = new Array<number>(); // Active beams (ordered, hence no set)
+
+interface Beam {
+    idx: number,
+    timelines: number,
+}
+
+const beams = new Map<number, Beam>();   // All beams (inactive and active), by index
+const activeBeams = new Array<Beam>();   // Active beams (ordered, hence no set)
 const splitters = new Set<number>();
 const splittersHandled = new Array<number>();
+
+function createBeam(idx: number, timelines: number): Beam {
+    const beam = {
+        idx,
+        timelines,
+    }
+
+    activeBeams.push(beam);
+    beams.set(idx, beam);
+
+    return beam;
+}
 
 // 7.1
 let splits = 0;
@@ -63,11 +81,12 @@ function printDebugMap(): void {
         for (let c = 0; c < width; c++) {
             const idx = index(r, c) as number;
 
-            let char = '.';
+            let char = ' . ';
             if (beams.has(idx)) {
-                char = r === 0 ? 'S' : '|';
+                const beam = beams.get(idx);
+                char = r === 0 ? ' S ' : beam!.timelines.toString().padStart(3);
             } else if (splitters.has(idx)) {
-                char = '^';
+                char = ' ^ ';
             }
 
             line += char;
@@ -94,8 +113,7 @@ for (let row = 0; row < lines; row++) {
                 break;
             case 'S':
                 idx = index(row, col) as number;
-                beams.add(idx);
-                activeBeams.push(idx);
+                createBeam(idx, 1);
                 break;
             default:
                 throw new Error(`WTF is at [${row},${col}]?`)
@@ -106,6 +124,8 @@ for (let row = 0; row < lines; row++) {
 // Initial Map
 printDebugMap();
 
+const finalizingBeams = new Array<Beam>();
+
 while (activeBeams.length > 0) {
     // Step
 
@@ -115,13 +135,11 @@ while (activeBeams.length > 0) {
         throw new Error("Invalid Beam, this should not be.");
     }
 
-    // Just as backup
-    beams.add(beam);
+    const indexBelow = nextRowIndex(beam.idx);
 
-    const indexBelow = nextRowIndex(beam);
-
-    // Out of bounds
+    // Last row
     if (indexBelow == null) {
+        finalizingBeams.push(beam);
         continue;
     }
 
@@ -131,31 +149,46 @@ while (activeBeams.length > 0) {
         splits++;
         // Split left and  right
         const [yb, xb] = point(indexBelow);
+
         const leftBelow = index(yb, xb - 1);
         const rightBelow = index(yb, xb + 1);
 
-        if (leftBelow != null && !beams.has(leftBelow)) {
-            activeBeams.push(leftBelow);
-            beams.add(leftBelow);
+        if (leftBelow != null) {
+            const beamLeftBelow = beams.get(leftBelow);
+
+            if (beamLeftBelow) {
+                beamLeftBelow.timelines += beam.timelines;
+            } else {
+                createBeam(leftBelow, beam.timelines);
+            }
         }
 
-        if (rightBelow != null && !beams.has(rightBelow)) {
-            activeBeams.push(rightBelow);
-            beams.add(rightBelow);
+        if (rightBelow != null) {
+            const beamRightBelow = beams.get(rightBelow);
+
+            if (beamRightBelow) {
+                beamRightBelow.timelines += beam.timelines;
+            } else {
+                createBeam(rightBelow, beam.timelines);
+            }
         }
-    } else if (!beams.has(indexBelow)) {
+    } else if (beams.has(indexBelow)) {
+        // There is already one below, add timelines
+        const beamBelow = beams.get(indexBelow)!
+        beamBelow.timelines += beam.timelines;
+    } else {
         // Continue onward
-
-        activeBeams.push(indexBelow);
-        beams.add(indexBelow);
+        createBeam(indexBelow, beam.timelines);
     }
 
     console.debug();
     printDebugMap();
 }
 
+console.log("Beams Spawns: " + beams.size)
 console.log("Splits: " + splits);
 //console.debug("Splitters: ", tk.countBy(splittersHandled, m => m));
+console.log("Timelines: " + tk.sumBy(finalizingBeams, b => b.timelines));
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Here were Dragons ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 console.timeEnd("time");
