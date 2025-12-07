@@ -124,10 +124,11 @@ for (let row = 0; row < lines; row++) {
 // Initial Map
 printDebugMap();
 
+// 7.2
 const finalizingBeams = new Array<Beam>();
 
+// Stepping through
 while (activeBeams.length > 0) {
-    // Step
 
     // Get oldest beam
     const beam = activeBeams.shift();
