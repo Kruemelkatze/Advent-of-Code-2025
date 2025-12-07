@@ -84,7 +84,7 @@ function printDebugMap(): void {
             let char = ' . ';
             if (beams.has(idx)) {
                 const beam = beams.get(idx);
-                char = r === 0 ? ' S ' : beam!.timelines.toString().padStart(3);
+                char = r === 0 ? ' S ' : tk.pad(beam!.timelines.toString(), 3);
             } else if (splitters.has(idx)) {
                 char = ' ^ ';
             }
