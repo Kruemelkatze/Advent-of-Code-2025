@@ -3,7 +3,8 @@
   "specifiers": {
     "jsr:@es-toolkit/es-toolkit@*": "1.42.0",
     "jsr:@es-toolkit/es-toolkit@^1.42.0": "1.42.0",
-    "jsr:@std/fs@*": "1.0.20"
+    "jsr:@std/fs@*": "1.0.20",
+    "npm:kd-tree-javascript@1.0.3": "1.0.3"
   },
   "jsr": {
     "@es-toolkit/es-toolkit@1.42.0": {
@@ -11,6 +12,11 @@
     },
     "@std/fs@1.0.20": {
       "integrity": "e953206aae48d46ee65e8783ded459f23bec7dd1f3879512911c35e5484ea187"
+    }
+  },
+  "npm": {
+    "kd-tree-javascript@1.0.3": {
+      "integrity": "sha512-7oSugmaxTCJFqey11rlTSEQD3hGDnRgROMj9MEREvDGV8SlIFwN7x3jJRyFoi+mjO0+4wuSuaDLS1reNQHP7uA=="
     }
   }
 }
