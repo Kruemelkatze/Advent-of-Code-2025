@@ -1,12 +1,16 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@cm-iv/queue@*": "1.0.0",
     "jsr:@es-toolkit/es-toolkit@*": "1.42.0",
     "jsr:@es-toolkit/es-toolkit@^1.42.0": "1.42.0",
     "jsr:@std/fs@*": "1.0.20",
     "npm:kd-tree-javascript@1.0.3": "1.0.3"
   },
   "jsr": {
+    "@cm-iv/queue@1.0.0": {
+      "integrity": "0dc1da37987077e765240a73f7164196fca065ce585fcb542f8db50831078f0a"
+    },
     "@es-toolkit/es-toolkit@1.42.0": {
       "integrity": "66b3c799dda4bf99a46ba91bcf6072dbe0ebdb8fab5482fdba15d3e96128bebe"
     },
