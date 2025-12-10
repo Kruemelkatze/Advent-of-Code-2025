@@ -1,13 +1,18 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@alg/priority-queue@*": "0.0.4",
     "jsr:@cm-iv/queue@*": "1.0.0",
     "jsr:@es-toolkit/es-toolkit@*": "1.42.0",
     "jsr:@es-toolkit/es-toolkit@^1.42.0": "1.42.0",
     "jsr:@std/fs@*": "1.0.20",
+    "npm:@datastructures-js/priority-queue@*": "6.3.5",
     "npm:kd-tree-javascript@1.0.3": "1.0.3"
   },
   "jsr": {
+    "@alg/priority-queue@0.0.4": {
+      "integrity": "92f402ff31959399d5c3f5f28f1dae8577182e020ba5d651d9710394ddac362a"
+    },
     "@cm-iv/queue@1.0.0": {
       "integrity": "0dc1da37987077e765240a73f7164196fca065ce585fcb542f8db50831078f0a"
     },
@@ -19,6 +24,15 @@
     }
   },
   "npm": {
+    "@datastructures-js/heap@4.3.7": {
+      "integrity": "sha512-Dx4un7Uj0dVxkfoq4RkpzsY2OrvNJgQYZ3n3UlGdl88RxxdHd7oTi21/l3zoxUUe0sXFuNUrfmWqlHzqnoN6Ug=="
+    },
+    "@datastructures-js/priority-queue@6.3.5": {
+      "integrity": "sha512-NmdmvLnkUyG67W6Iy8tP+865ILq5VDyZh90c8lHMOkYYydUNzOV0QNPCRAuj4AoHSm/V2DeuYvDKnvALaCwLvA==",
+      "dependencies": [
+        "@datastructures-js/heap"
+      ]
+    },
     "kd-tree-javascript@1.0.3": {
       "integrity": "sha512-7oSugmaxTCJFqey11rlTSEQD3hGDnRgROMj9MEREvDGV8SlIFwN7x3jJRyFoi+mjO0+4wuSuaDLS1reNQHP7uA=="
     }
