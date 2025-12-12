@@ -3,7 +3,7 @@ import { exists } from "jsr:@std/fs/exists";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Config ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const PROD = Deno.args.some((arg) => arg === "prod");
-const inputFile = PROD ? "input.txt" : "input-test.txt";
+const inputFile = PROD ? "input.txt" : "input-test.11-1.txt";
 console.log(`Using ${inputFile} (${PROD ? "PROD" : "TEST"})`);
 
 console.debug = (...args: any[]) => PROD ? null : console.log(...args);
@@ -56,14 +56,26 @@ for (const line of inputLines) {
 }
 
 const maxDepth = devices.size;
-const startNode = devices.get('you')!;
 const targetNode = devices.get('out')!;
 
 
+// I used and scrapped tk.memoize, as I thought it does not quite work with my recursive approach...
+// ... turned out, I made a bug when preparing for memoization (originally, I reused the arrays returned by
+// the children, which would 100% have broken memoization).
+const resultCache = new Map<string, Device[][] | null>();
+
 // 11.1 find all paths by DFS
 function dfsAll(node: Device, depthRemaining: number): Device[][] | null {
+    const cached = resultCache.get(node.name);
+
+    if (cached !== undefined) {
+        return cached;
+    }
+
     if (node === targetNode) {
-        return [[node]];
+        const found = [[node]];
+        resultCache.set(node.name, found);
+        return found;
     }
 
     if (depthRemaining <= 0) {
@@ -79,20 +91,20 @@ function dfsAll(node: Device, depthRemaining: number): Device[][] | null {
 
         solutions = solutions ?? [];
         for (const childSolution of solutionsInChild) {
-            childSolution.push(node);
-            solutions.push(childSolution);
+            solutions.push([...childSolution, node]);
         }
     }
+
+    resultCache.set(node.name, solutions);
 
     return solutions;
 }
 
+//11.1
+const startNode = devices.get('you')!;
 const allPaths = dfsAll(startNode, maxDepth);
 console.debug(allPaths);
-console.log("Number of Paths: " + allPaths?.length);
-
-
-
+console.log("11.1: Number of Paths: " + allPaths?.length);
 
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Here were Dragons ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
